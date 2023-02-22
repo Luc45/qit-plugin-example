@@ -16,25 +16,11 @@ jobs:
         run: ./bin/qit env:add --environment=staging --manager_url=https://stagingcompatibilitydashboard.wpcomstaging.com --qit_secret=${{ secrets.QIT_STAGING_SECRET }}
       - name: Create Zip.
         run: docker run --rm --user $(id -u):$(id -g) -v "$GITHUB_WORKSPACE:/app" -w /app joshkeegan/zip:latest sh -c "zip -r automatewoo.zip automatewoo"
-      - name: Produce output
-        id: run-produce-output
-        run: echo $(foo_output=./mimick-output.sh) >> $GITHUB_OUTPUT
-      - name: Echo output
-        if: always()
-        run: echo ${{ steps.run-produce-output.outputs.foo_output }}
+      - name: Run Security Test.
+        id: run-security-test
+        run: ./bin/qit run:security automatewoo --zip=automatewoo.zip --wait > tmp.txt
       - uses: marocchino/sticky-pull-request-comment@v2
         if: always()
         with:
           header: QIT Security Test
-          message: |
-            ```            
-            ${{ steps.run-produce-output.outputs.foo_output }}
-            
-            ${{ steps.run-produce-output.outputs.stdout }}
-            
-            ${{ steps.run-produce-output.outputs.result }}
-            
-            ${{ steps.run-produce-output.outputs.stderr }}
-            
-            ${{join(steps.run-produce-output.outputs.*, '\n')}}
-            ```
+          path: tmp.txt
