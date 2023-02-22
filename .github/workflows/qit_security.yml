@@ -16,25 +16,25 @@ jobs:
         run: ./bin/qit env:add --environment=staging --manager_url=https://stagingcompatibilitydashboard.wpcomstaging.com --qit_secret=${{ secrets.QIT_STAGING_SECRET }}
       - name: Create Zip.
         run: docker run --rm --user $(id -u):$(id -g) -v "$GITHUB_WORKSPACE:/app" -w /app joshkeegan/zip:latest sh -c "zip -r automatewoo.zip automatewoo"
-      - name: Run Security Test.
-        id: run-security-test
+      - name: Produce output
+        id: run-produce-output
         run: ./mimick-output.sh
       - name: Echo output
         if: always()
-        run: echo ${{join(steps.run-security-test.outputs.*, '\n')}}
+        run: echo ${{join(steps.run-produce-output.outputs.*, '\n')}}
       - uses: marocchino/sticky-pull-request-comment@v2
         if: always()
         with:
           header: QIT Security Test
           message: |
             ```            
-            ${{ steps.run-security-test.outputs.foo_output }}
+            ${{ steps.run-produce-output.outputs.foo_output }}
             
-            ${{ steps.run-security-test.outputs.stdout }}
+            ${{ steps.run-produce-output.outputs.stdout }}
             
-            ${{ steps.run-security-test.outputs.result }}
+            ${{ steps.run-produce-output.outputs.result }}
             
-            ${{ steps.run-security-test.outputs.stderr }}
+            ${{ steps.run-produce-output.outputs.stderr }}
             
-            ${{join(steps.run-security-test.outputs.*, '\n')}}
+            ${{join(steps.run-produce-output.outputs.*, '\n')}}
             ```
