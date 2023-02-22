@@ -25,5 +25,5 @@ jobs:
           header: QIT Activation Test
           message: |
             ```
-            ${{ steps.run-activation-test.outputs.stdout }}
+            ${{ steps.run-activation-test.outputs.output }}
             ```

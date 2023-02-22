@@ -25,5 +25,5 @@ jobs:
           header: QIT Security Test
           message: |
             ```
-            ${{ steps.run-security-test.outputs.stdout }}
+            ${{ steps.run-security-test.outputs.output }}
             ```
