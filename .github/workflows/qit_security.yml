@@ -1,6 +1,6 @@
 name: QIT Security Test
 on:
-  push
+  pull_request:
 jobs:
   qit_activation:
     name: QIT Security
