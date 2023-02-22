@@ -1,6 +1,8 @@
 name: QIT Activation Test
 on:
-  push
+  pull_request:
+permissions:
+  pull-requests: write
 jobs:
   qit_activation:
     name: QIT Activation
@@ -15,4 +17,11 @@ jobs:
       - name: Create Zip.
         run: docker run --rm --user $(id -u):$(id -g) -v "$GITHUB_WORKSPACE:/app" -w /app joshkeegan/zip:latest sh -c "zip -r automatewoo.zip automatewoo"
       - name: Run Activation Test
-        run: ./bin/qit run:activation automatewoo --zip=automatewoo.zip --wait
+        id: run-activation-test
+        run: ./bin/qit run:activation automatewoo --zip=automatewoo.zip --wait > activation.txt
+      - uses: marocchino/sticky-pull-request-comment@v2
+        if: always()
+        with:
+          header: QIT Activation Test
+          recreate: true
+          path: activation.txt

@@ -1,6 +1,8 @@
 name: QIT Security Test
 on:
-  push
+  pull_request:
+permissions:
+  pull-requests: write
 jobs:
   qit_activation:
     name: QIT Security
@@ -15,4 +17,11 @@ jobs:
       - name: Create Zip.
         run: docker run --rm --user $(id -u):$(id -g) -v "$GITHUB_WORKSPACE:/app" -w /app joshkeegan/zip:latest sh -c "zip -r automatewoo.zip automatewoo"
       - name: Run Security Test.
-        run: ./bin/qit run:security automatewoo --zip=automatewoo.zip --wait
+        id: run-security-test
+        run: ./bin/qit run:security automatewoo --zip=automatewoo.zip --wait > security.txt
+      - uses: marocchino/sticky-pull-request-comment@v2
+        if: always()
+        with:
+          header: QIT Security Test
+          recreate: true
+          path: security.txt
