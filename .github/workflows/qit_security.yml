@@ -20,6 +20,7 @@ jobs:
         id: run-produce-output
         run: ./mimick-output.sh > output.txt
       - name: Echo output
+        if: always()
         run: cat output.txt
       - uses: marocchino/sticky-pull-request-comment@v2
         if: always()
