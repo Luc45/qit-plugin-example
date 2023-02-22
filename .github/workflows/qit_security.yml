@@ -1,4 +1,4 @@
-name: QIT Activation Test
+name: QIT Security Test
 on:
   push
 jobs:
@@ -7,7 +7,7 @@ jobs:
     uses: ./.github/workflows/setup-qit.yml
     secrets: inherit
   qit_activation:
-    name: QIT Activation
+    name: QIT Security
     runs-on: ubuntu-20.04
     needs: [ setup-qit ]
     steps:
@@ -16,4 +16,4 @@ jobs:
       - name: Create Zip.
         run: docker run --rm --user $(id -u):$(id -g) -v "$GITHUB_WORKSPACE:/app" -w /app joshkeegan/zip:latest sh -c "zip -r automatewoo.zip automatewoo"
       - name: Run Activation Test
-        run: ./bin/qit run:activation automatewoo --zip=automatewoo.zip --wait
+        run: ./bin/qit run:security automatewoo --zip=automatewoo.zip --wait
