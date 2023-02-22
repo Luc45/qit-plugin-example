@@ -15,4 +15,12 @@ jobs:
       - name: Create Zip.
         run: docker run --rm --user $(id -u):$(id -g) -v "$GITHUB_WORKSPACE:/app" -w /app joshkeegan/zip:latest sh -c "zip -r automatewoo.zip automatewoo"
       - name: Run Activation Test
-        run: ./bin/qit run:activation automatewoo --zip=automatewoo.zip --wait
+        id: run-activation-test
+        run: ./bin/qit run:activation automatewoo --zip=automatewoo.zip --wait >> $GITHUB_OUTPUT
+      - uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          header: QIT Activation Test
+          message: |
+            ```
+            ${{ steps.run-activation-test.outputs.result }}
+            ```

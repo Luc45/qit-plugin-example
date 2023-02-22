@@ -15,4 +15,12 @@ jobs:
       - name: Create Zip.
         run: docker run --rm --user $(id -u):$(id -g) -v "$GITHUB_WORKSPACE:/app" -w /app joshkeegan/zip:latest sh -c "zip -r automatewoo.zip automatewoo"
       - name: Run Security Test.
-        run: ./bin/qit run:security automatewoo --zip=automatewoo.zip --wait
+        id: run-security-test
+        run: ./bin/qit run:security automatewoo --zip=automatewoo.zip --wait >> $GITHUB_OUTPUT
+      - uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          header: QIT Security Test
+          message: |
+            ```
+            ${{ steps.run-security-test.outputs.result }}
+            ```
