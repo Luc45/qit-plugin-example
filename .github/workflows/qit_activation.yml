@@ -15,4 +15,4 @@ jobs:
       - name: Connect to QIT Staging
         run: ./bin/qit env:add --environment=staging --manager_url=https://stagingcompatibilitydashboard.wpcomstaging.com --qit_secret=${{ secrets.QIT_STAGING_SECRET }}
       - name: Run Activation Test
-        run: ./bin/qit run:activation automatewoo --zip=plugin.zip --wait
+        run: ./bin/qit run:activation automatewoo --zip=automatewoo.zip --wait
