@@ -17,8 +17,7 @@ jobs:
       - name: Create Zip.
         run: docker run --rm --user $(id -u):$(id -g) -v "$GITHUB_WORKSPACE:/app" -w /app joshkeegan/zip:latest sh -c "zip -r automatewoo.zip automatewoo"
       - name: Produce Some Output
-        id: run-produce-output
-        run: ./mimick-output.sh > output.txt
+        run: bash mimick-output.sh > output.txt
       - name: Echo output
         if: always()
         run: cat output.txt
