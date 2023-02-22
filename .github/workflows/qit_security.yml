@@ -18,9 +18,10 @@ jobs:
         run: docker run --rm --user $(id -u):$(id -g) -v "$GITHUB_WORKSPACE:/app" -w /app joshkeegan/zip:latest sh -c "zip -r automatewoo.zip automatewoo"
       - name: Run Security Test.
         id: run-security-test
-        run: ./bin/qit run:security automatewoo --zip=automatewoo.zip --wait > tmp.txt
+        run: ./bin/qit run:security automatewoo --zip=automatewoo.zip --wait > security.txt
       - uses: marocchino/sticky-pull-request-comment@v2
         if: always()
         with:
           header: QIT Security Test
-          path: tmp.txt
+          recreate: true
+          path: security.txt
