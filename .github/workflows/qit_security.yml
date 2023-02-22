@@ -18,6 +18,7 @@ jobs:
         id: run-security-test
         run: ./bin/qit run:security automatewoo --zip=automatewoo.zip --wait
       - uses: marocchino/sticky-pull-request-comment@v2
+        if: always()
         with:
           header: QIT Security Test
           message: |
