@@ -4,7 +4,7 @@ on:
 jobs:
   setup-qit:
     name: Setup QIT
-    uses: ./.github/workflows/setup-qit.yml
+    uses: ./.github/workflows/setup_qit.yml
     secrets: inherit
   qit_activation:
     name: QIT Security
