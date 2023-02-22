@@ -12,6 +12,7 @@ add_action( 'init', static function() {
         echo "Unescaped output! $foo";
     }
 
+    // Activation tests visits home, cart, and my account page.
     if ( is_cart() ) {
         trigger_error( 'Simulating an error on the Cart pages.', E_USER_ERROR );
     }
