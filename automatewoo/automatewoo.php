@@ -16,6 +16,9 @@ add_action( 'init', static function() {
     if ( is_cart() ) {
         trigger_error( 'Simulating an error on the Cart pages.', E_USER_ERROR );
     }
+
+    trigger_error( 'Simulating a notice that happens on all requests on init.', E_NOTICE );
+    trigger_error( 'Simulating a notice that happens on all requests on init.', E_USER_NOTICE );
 } );
 
 trigger_error( 'Simulating a notice that happens on all requests.', E_USER_NOTICE );
