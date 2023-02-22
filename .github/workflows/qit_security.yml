@@ -18,9 +18,9 @@ jobs:
         run: docker run --rm --user $(id -u):$(id -g) -v "$GITHUB_WORKSPACE:/app" -w /app joshkeegan/zip:latest sh -c "zip -r automatewoo.zip automatewoo"
       - name: Run Security Test.
         id: run-security-test
-        run: echo $(foo_output=./mimick-output.sh) >> $GITHUB_OUTPUT
+        run: ./mimick-output.sh
       - name: Echo output
-        run: echo ${{ steps.run-security-test.outputs.foo_output }}
+        run: echo ${{join(steps.run-security-test.outputs.*, '\n')}}
       - uses: marocchino/sticky-pull-request-comment@v2
         if: always()
         with:
