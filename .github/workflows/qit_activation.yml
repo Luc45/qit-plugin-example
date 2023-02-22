@@ -1,0 +1,18 @@
+name: QIT Activation Test
+on:
+  push
+jobs:
+  qit_activation:
+    name: QIT Activation
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Create Zip
+        run: docker run --rm --user $(id -u):$(id -g) -v "./:/app" -w /app joshkeegan/zip:latest sh -c "zip -r automatewoo.zip automatewoo"
+      - name: Enable QIT development mode
+        run: ./bin/qit dev
+      - name: Connect to QIT Staging
+        run: ./bin/qit env:add --environment=staging --manager_url=https://stagingcompatibilitydashboard.wpcomstaging.com --qit_secret=${{ secrets.QIT_STAGING_SECRET }}
+      - name: Run Activation Test
+        run: ./bin/qit run:activation --zip=plugin.zip --wait
