@@ -24,4 +24,5 @@ jobs:
         with:
           header: QIT Security Test
           recreate: true
+          delete: true
           path: security.txt
