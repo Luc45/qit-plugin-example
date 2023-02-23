@@ -23,5 +23,5 @@ jobs:
         if: always()
         with:
           header: QIT Security Test
-          delete: true
+          recreate: true
           path: security.txt

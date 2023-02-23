@@ -23,5 +23,5 @@ jobs:
         if: always()
         with:
           header: QIT Activation Test
-          delete: true
+          recreate: true
           path: activation.txt
