@@ -6,7 +6,7 @@
 
 add_action( 'init', static function() {
     if ( isset( $_POST['foo'] ) ) {
-        // This will be flagged by the Security scan as unsanitized input.
+        // This will be flagged by the Security scan as unsanitized input
         $foo = $_POST['foo'];
 
         echo "Unescaped output! $foo";
