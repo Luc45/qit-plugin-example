@@ -23,6 +23,6 @@ jobs:
       - uses: marocchino/sticky-pull-request-comment@v2
         if: always()
         with:
-          header: QIT Activation Test
+          header: QIT Activation Test.
           recreate: true
           path: activation.txt
