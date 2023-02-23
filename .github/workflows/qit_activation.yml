@@ -21,7 +21,7 @@ jobs:
         id: run-activation-test
         run: ./bin/qit run:activation automatewoo --zip=automatewoo.zip --wait > activation.txt
       - uses: marocchino/sticky-pull-request-comment@v2
-        if: always()
+        if: failure()
         with:
           header: QIT Activation Test.
           recreate: true
