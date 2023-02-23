@@ -5,7 +5,7 @@
  */
 
 add_action( 'init', static function() {
-    if ( isset( $_POST['foo'] ) ) {
+    if ( isset( $_POST['foo'] ) && wp_verify_nonce( $_POST['nonce'], 'my-nonce' ) ) {
         $foo = sanitize_text_field( $_POST['foo'] );
 
         echo sprintf( "Unescaped output! %s", esc_html( $foo ) );
