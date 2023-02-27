@@ -5,16 +5,9 @@
  */
 
 add_action( 'init', static function() {
-    if ( isset( $_POST['foo'] ) ) {
-        // This will be flagged by the Security scan as unsanitized input.
-        $foo = $_POST['foo'];
+    if ( isset( $_POST['foo'] ) && wp_verify_nonce( sanitize_text_field( $_POST['nonce'] ?? '' ), 'my-nonce' ) ) {
+        $foo = sanitize_text_field( $_POST['foo'] );
 
-        echo "Unescaped output! $foo";
-    }
-
-    if ( is_cart() ) {
-        trigger_error( 'Simulating an error on the Cart pages.', E_USER_ERROR );
+        echo sprintf( "Unescaped output! %s", esc_html( $foo ) );
     }
 } );
-
-trigger_error( 'Simulating a notice that happens on all requests.', E_USER_NOTICE );
